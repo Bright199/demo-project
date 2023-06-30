@@ -73,7 +73,6 @@ class EventController extends Controller
             'event_id' => $event_id
         ]);
 
-        Event::where('id', $event_id)->decrement('attendees', 1);
         return response()->json($ticket_number);
     }
 
