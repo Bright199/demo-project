@@ -52,6 +52,7 @@ class UsersController extends Controller
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
+        Auth::guard('web')->logout();
     }
 
   

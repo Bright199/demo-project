@@ -25,11 +25,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [UsersController::class, 'logout']);
     Route::post('/create-event', [EventController::class, 'create']);
     Route::get('/fetch-events', [EventController::class, 'index']);
-    Route::get('/fetch-all-events', [EventController::class, 'allEvents']);
     Route::get('/fetch-tickets', [EventController::class, 'fetchTickets']);
     Route::post('/make-reservation', [EventController::class, 'makeReservation']);
     Route::post('/compliance-registration', [ComplianceRegistrationController::class, 'create']);
 });
 
+Route::get('/fetch-all-events', [EventController::class, 'allEvents']);
 Route::post('/register', [UsersController::class, 'register']);
 Route::post('/login', [UsersController::class, 'login']);

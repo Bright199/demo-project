@@ -115,7 +115,7 @@ const Dashboard = () => {
             className="flex items-center justify-center mt-52 bg-white p-5 rounded-md flex-col"
             key={"yes"}
           >
-            <span class="material-icons-outlined text-[#F18701]">
+            <span className="material-icons-outlined text-[#F18701]">
               assignment_turned_in
             </span>
             <p className="">Form registration has been registered!</p>

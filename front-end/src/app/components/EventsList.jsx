@@ -12,7 +12,10 @@ import { useRouter } from "next/navigation";
 const EventsList = () => {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [events, setEvents] = useState(null);
-  const router = useRouter()
+  const router = useRouter();
+  const [showMore, setShowMore] = useState(false);
+  const itemsToShow = showMore ? events.length : 3;
+
   const toastifySettings = {
     position: "top-right",
     autoClose: 5000,
@@ -22,6 +25,10 @@ const EventsList = () => {
     draggable: true,
     progress: undefined,
     theme: "colored",
+  };
+
+  const handleShowMore = () => {
+    setShowMore(true);
   };
 
   const openModal = (product) => {
@@ -48,6 +55,11 @@ const EventsList = () => {
   };
 
   const reserveTicket = async () => {
+    const auth = localStorage.getItem("userToken");
+    if (auth === null) {
+      router.push("/login");
+      return;
+    }
     try {
       const { data } = await apis.makeReservation(selectedProduct);
       toast.success(
@@ -56,7 +68,7 @@ const EventsList = () => {
       );
       closeModal();
       setTimeout(() => {
-        router.push('/reservations')
+        router.push("/reservations");
       }, 1500);
     } catch (error) {
       toast.error("Something went wrong with reserve ticket");
@@ -121,7 +133,7 @@ const EventsList = () => {
                       Passed
                     </span>
                   ) : (
-                    "failed"
+                    ""
                   )}
                 </p>
                 <p>Ticket price: ${selectedProduct.price}</p>
@@ -173,12 +185,12 @@ const EventsList = () => {
       </AnimatePresence>
       <div className="flex flex-wrap md:gap-9 w-full md:w-[1165px] mt-12">
         {events &&
-          events.map((event, i) => {
+          events.slice(0, itemsToShow).map((event, i) => {
             return (
               <motion.div
                 key={i}
                 whileHover={{ scale: 1.024 }}
-                className="w-[362px] h-[455px] flex flex-col gap-3 items-center shadow-xl bg-white relative hover:shadow-2xl"
+                className="w-[362px] h-[455px] flex flex-col gap-3 mt-6 md:mt-0 items-center shadow-xl bg-white relative hover:shadow-2xl"
               >
                 <div className="imageContainer w-full h-[240px]">
                   <img
@@ -189,7 +201,9 @@ const EventsList = () => {
                 <h3 className="text-2xl font-bold">
                   {getFormattedTitle(event.title)}
                 </h3>
-                <p className="text-center">{getFormattedText(event.description)}</p>
+                <p className="text-center">
+                  {getFormattedText(event.description)}
+                </p>
                 <button
                   onClick={() => openModal(event)}
                   className="bg-[#3D348B]  hover:bg-[#F18701] transition duration-300 ease-in-out  py-3 text-white flex items-center justify-center gap-2 w-full absolute bottom-0"
@@ -202,9 +216,11 @@ const EventsList = () => {
           })}
       </div>
 
-      <div className="md:w-[1168px] mt-5 flex items-center justify-center">
-        <button>More events...</button>
-      </div>
+      {!showMore && events && events.length > 3 && (
+        <div onClick={handleShowMore} className="md:w-[1168px] mt-5 flex items-center justify-center">
+          <button>More events...</button>
+        </div>
+      )}
     </div>
   );
 };

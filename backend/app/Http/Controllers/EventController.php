@@ -23,7 +23,8 @@ class EventController extends Controller
     }
     public function allEvents()
     {
-        if (Auth::user()) {
+       $events = '';
+        if (Auth::check()) {
             $events =
                 Event::where('user_id', '!=', Auth::id())->withCount('booked')->get();
         } else {
