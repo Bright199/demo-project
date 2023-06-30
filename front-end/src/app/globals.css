@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --main-color: #3D348B;
+--orange-color: #F18701;
+  --white-color: #fff;
+  --bg-color: #F8F8FF;
+}
+
+body {
+  color: var(--main-color);
+  background: var(--bg-color);
+}
+
+input:focus {
+  border: 1px solid rgb(61, 52, 139, 0.3);
+  outline: 1px rgb(61, 52, 139, 0.3);
+}
+
+input {
+  border: 1px solid rgb(61, 52, 139, 0.3);
+}
+textarea:focus {
+  border: 1px solid rgb(61, 52, 139, 0.3);
+  outline: 1px rgb(61, 52, 139, 0.3);
+}
+
+textarea {
+  resize: none;
+  border: 1px solid rgb(61, 52, 139, 0.3);
+}
+
+.bg-gradient-color {
+  border-radius: 14px;
+  background: linear-gradient(126deg, #F18701 0%, #3D348B 58.85%);
+}
